@@ -1,0 +1,1 @@
+export function Stat({label,value,sub}:{label:string;value:string|number;sub?:string}){return <div className="card rounded-2xl p-5"><div className="text-slate-400 text-sm">{label}</div><div className="text-3xl font-black mt-2">{value}</div>{sub&&<div className="text-xs text-slate-500 mt-2">{sub}</div>}</div>}

@@ -1,51 +1,33 @@
 # ClipDropper Social
 
-Private dashboard for Mike's 49ers short-form workflow: Dropbox clips -> AI copy -> schedule -> YouTube Shorts + Facebook Reels.
+Deploy-safe V1 for GitHub + Vercel.
 
-## What is included
-- Google login lock to `mikeaurtaza@gmail.com`
-- Dashboard, clips, calendar, analytics, settings
-- Supabase schema
-- OAuth connection routes for Dropbox, YouTube, Facebook
-- OpenAI title/description/caption generation with monthly budget cap
-- YouTube default tags field, 500 characters
-- Scheduled publishing cron placeholder
+## What works now
 
-## Important
-The repo is wired for OAuth and posting architecture, but real YouTube/Facebook video upload needs final testing with your live developer apps and channel/page permissions. The cron publish route currently marks due clips as posted with a mock URL so you can test scheduling safely before live posting.
+- Next.js dashboard
+- Clip queue
+- Calendar
+- Settings page
+- AI budget UI
+- YouTube/Facebook/Dropbox credential UI
+- Demo AI text generation
+- No cron jobs
+- Minimal dependencies to avoid Vercel npm install failure
 
-## Setup
-1. Create Supabase project and run `supabase/schema.sql` in SQL editor.
-2. Copy `.env.example` to `.env.local`.
-3. Fill Supabase, OpenAI, Google, Dropbox, and Facebook credentials.
-4. Run:
+## What this version intentionally does not do yet
 
-```bash
-npm install
-npm run dev
-```
+- It does not perform real YouTube uploads yet.
+- It does not perform real Facebook Reels uploads yet.
+- It does not perform Dropbox OAuth yet.
+- It does not store secrets server-side yet.
 
-## OAuth callback URLs
-Use these in each developer console:
+This package is designed to deploy cleanly first. After deploy, add real Supabase encrypted settings storage and OAuth upload routes.
 
-```text
-http://localhost:3000/api/auth/google/callback
-http://localhost:3000/api/connections/youtube/callback
-http://localhost:3000/api/connections/dropbox/callback
-http://localhost:3000/api/connections/facebook/callback
-```
+## Vercel settings
 
-For Vercel, replace localhost with your Vercel URL.
+- Framework: Next.js
+- Node: 20.x
+- Install command: npm install --no-audit --no-fund
+- Build command: npm run build
 
-## Vercel Cron
-Create a cron for:
-
-```text
-/api/cron/publish
-```
-
-Header:
-
-```text
-Authorization: Bearer YOUR_CRON_SECRET
-```
+No `vercel.json` is included because free Hobby cron jobs were blocking deployment.

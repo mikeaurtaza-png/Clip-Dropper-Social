@@ -1,1 +1,3 @@
-export type ClipStatus='draft'|'scheduled'|'posted'|'failed';export type AccountProvider='dropbox'|'youtube'|'facebook';
+export type ClipStatus = 'draft'|'scheduled'|'posted'|'failed';
+export type Clip = {id:string; filename:string; dropboxPath:string; status:ClipStatus; youtubeTitle:string; youtubeDescription:string; facebookCaption:string; tags:string; scheduledAt:string; youtubeUrl?:string; facebookUrl?:string; ytViews:number; fbViews:number; createdAt:string};
+export type Settings = {allowedEmail:string; openAiKey:string; aiMonthlyBudget:number; aiSpent:number; hardStop:boolean; dropboxAppKey:string; dropboxAppSecret:string; youtubeClientId:string; youtubeClientSecret:string; facebookAppId:string; facebookAppSecret:string; youtubeDefaultTags:string; youtubeDescriptionFooter:string; facebookCaptionFooter:string; shortsFolder:string};

@@ -1,1 +1,9 @@
-import { redirect } from 'next/navigation';export default function Home(){redirect('/dashboard')}
+'use client';
+import { Shell } from '@/components/Shell';
+import { Stat } from '@/components/Stat';
+import { ClipCard } from '@/components/ClipCard';
+import { seedClips } from '@/lib/mock';
+import { Clip } from '@/lib/types';
+import { useEffect, useState } from 'react';
+const KEY='cds_clips_v1';
+export default function Dashboard(){const [clips,setClips]=useState<Clip[]>([]);useEffect(()=>{const saved=localStorage.getItem(KEY);setClips(saved?JSON.parse(saved):seedClips)},[]);function update(c:Clip){const next=clips.map(x=>x.id===c.id?c:x);setClips(next);localStorage.setItem(KEY,JSON.stringify(next))}const posted=clips.filter(c=>c.status==='posted');return <Shell><div className="flex flex-col gap-6"><div><h1 className="text-3xl md:text-5xl font-black">ClipDropper Social</h1><p className="text-slate-400 mt-2">YouTube Shorts + Facebook Reels queue for your 49ers content.</p></div><div className="grid md:grid-cols-4 gap-4"><Stat label="Drafts" value={clips.filter(c=>c.status==='draft').length}/><Stat label="Scheduled" value={clips.filter(c=>c.status==='scheduled').length}/><Stat label="Posted" value={posted.length}/><Stat label="Total Views" value={(posted.reduce((a,c)=>a+c.ytViews+c.fbViews,0)).toLocaleString()} sub="YouTube + Facebook"/></div><div className="card rounded-2xl p-5"><h2 className="text-xl font-bold">Health Dashboard</h2><div className="grid md:grid-cols-5 gap-3 mt-4 text-sm"><div className="pill rounded-xl p-3">Dropbox<br/><b>Ready to connect</b></div><div className="pill rounded-xl p-3">YouTube<br/><b>Ready to connect</b></div><div className="pill rounded-xl p-3">Facebook<br/><b>Ready to connect</b></div><div className="pill rounded-xl p-3">OpenAI<br/><b>Budget protected</b></div><div className="pill rounded-xl p-3">Deploy<br/><b>Vercel safe</b></div></div></div><div><h2 className="text-2xl font-bold mb-4">Recent Clips</h2><div className="grid gap-4">{clips.slice(0,3).map(c=><ClipCard key={c.id} clip={c} onUpdate={update}/>)}</div></div></div></Shell>}
