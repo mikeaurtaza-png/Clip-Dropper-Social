@@ -1,0 +1,2 @@
+import { NextResponse } from 'next/server';import { env } from '@/lib/env';import { oauthUrl,facebookRedirect } from '@/lib/oauth';
+export async function GET(){return NextResponse.redirect(oauthUrl('https://www.facebook.com/v20.0/dialog/oauth',{client_id:env.facebookClientId,redirect_uri:facebookRedirect,response_type:'code',scope:'pages_show_list,pages_read_engagement,pages_manage_posts,pages_manage_metadata,publish_video'}))}

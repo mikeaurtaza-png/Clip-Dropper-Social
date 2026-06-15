@@ -1,5 +1,3 @@
-import "./globals.css";
-import Link from "next/link";
-import { getUserEmail } from "@/lib/auth";
-export const metadata = { title: "ClipDropper Social", description: "Dropbox to YouTube Shorts and Facebook Reels" };
-export default async function RootLayout({children}:{children:React.ReactNode}){ const email=await getUserEmail(); return <html lang="en"><body><div style={{maxWidth:1180,margin:"0 auto",padding:24}}><header className="card" style={{padding:18,marginBottom:18,display:"flex",justifyContent:"space-between",gap:16,alignItems:"center"}}><div><b style={{fontSize:22}}>ClipDropper Social</b><div style={{color:'#94a3b8',fontSize:13}}>YouTube Shorts + Facebook Reels command center</div></div><nav className="nav" style={{display:'flex',gap:10,alignItems:'center'}}><Link className="btn secondary" href="/">Dashboard</Link><Link className="btn secondary" href="/clips">Clips</Link><Link className="btn secondary" href="/calendar">Calendar</Link><Link className="btn secondary" href="/analytics">Analytics</Link><Link className="btn secondary" href="/settings">Settings</Link>{email?<a className="btn danger" href="/api/auth/logout">Logout</a>:<Link className="btn" href="/login">Login</Link>}</nav></header>{children}</div></body></html> }
+import './globals.css';
+export const metadata={title:'ClipDropper Social',description:'Dropbox to YouTube Shorts and Facebook Reels'};
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body><main className="min-h-screen max-w-7xl mx-auto p-5">{children}</main></body></html>}

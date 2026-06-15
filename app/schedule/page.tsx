@@ -1,0 +1,2 @@
+import { supabaseAdmin } from '@/lib/supabaseAdmin';
+export default async function Schedule(){const {data}=await supabaseAdmin().from('clips').select('*').in('status',['scheduled','failed']).order('scheduled_at',{ascending:true});return <div><h1 className="mb-4 text-3xl font-black">Schedule</h1><div className="grid gap-3">{data?.map((c:any)=><div className="card p-4" key={c.id}><div className="font-bold">{c.filename}</div><div className="text-sm text-slate-400">{c.scheduled_at||'No time'} · {c.status}</div></div>)}</div></div>}

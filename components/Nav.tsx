@@ -1,0 +1,1 @@
+export function Nav(){const items=[['/dashboard','Dashboard'],['/clips','Clips'],['/calendar','Calendar'],['/analytics','Analytics'],['/settings','Settings']];return <nav className="flex flex-wrap gap-3 mb-6">{items.map(([href,label])=><a key={href} className="btn2" href={href}>{label}</a>)}</nav>}

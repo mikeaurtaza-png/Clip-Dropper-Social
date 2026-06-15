@@ -1,0 +1,3 @@
+import { supabaseAdmin } from './supabaseAdmin';
+export async function saveAccount(provider:string, tokens:any){await supabaseAdmin().from('accounts').upsert({provider,access_token:tokens.access_token,refresh_token:tokens.refresh_token||null,expires_at:tokens.expires_in?new Date(Date.now()+tokens.expires_in*1000).toISOString():null,meta:tokens,updated_at:new Date().toISOString()},{onConflict:'provider'})}
+export async function getAccount(provider:string){const {data,error}=await supabaseAdmin().from('accounts').select('*').eq('provider',provider).single();if(error||!data)throw new Error(`Missing ${provider} account connection`);return data}
