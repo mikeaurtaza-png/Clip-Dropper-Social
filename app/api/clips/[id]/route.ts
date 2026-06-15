@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server"; import { requireUser } from "@/lib/auth"; import { updateRow } from "@/lib/supabaseRest";
+export async function POST(req:Request, ctx:any){ await requireUser(); const f=await req.formData(); const row:any={}; for(const key of ['youtube_title','youtube_description','youtube_tags','facebook_caption','scheduled_at','status']){ const v=f.get(key); if(v!==null && String(v)!=='') row[key]=String(v); } await updateRow('clips',ctx.params.id,row); return NextResponse.redirect(new URL('/clips',req.url)); }
+export async function PATCH(req:Request, ctx:any){ await requireUser(); const body=await req.json(); return NextResponse.json(await updateRow('clips',ctx.params.id,body)); }

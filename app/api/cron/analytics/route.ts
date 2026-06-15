@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server"; import { listRows, updateRow } from "@/lib/supabaseRest"; import type { Clip } from "@/lib/types";
+function authorized(req:Request){ return new URL(req.url).searchParams.get('secret')===process.env.CRON_SECRET || req.headers.get('authorization')===`Bearer ${process.env.CRON_SECRET}`; }
+export async function GET(req:Request){ if(!authorized(req)) return NextResponse.json({error:'unauthorized'},{status:401}); const clips=await listRows<Clip>('clips','status=eq.posted&limit=50'); for(const c of clips){ await updateRow('clips',c.id,{yt_views:c.yt_views||0,fb_views:c.fb_views||0}); } return NextResponse.json({ok:true,checked:clips.length,note:'Analytics route compiles; add platform-specific metrics once post IDs exist.'}); }

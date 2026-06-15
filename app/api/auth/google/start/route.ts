@@ -1,0 +1,2 @@
+import { NextResponse } from "next/server"; import { appUrl, env } from "@/lib/env";
+export async function GET(){ const id=env('GOOGLE_CLIENT_ID'); if(!id) return NextResponse.redirect(`${appUrl()}/login?google_missing=1`); const scope=encodeURIComponent('openid email profile'); const redirect=encodeURIComponent(`${appUrl()}/api/auth/google/callback`); return NextResponse.redirect(`https://accounts.google.com/o/oauth2/v2/auth?client_id=${id}&redirect_uri=${redirect}&response_type=code&scope=${scope}&access_type=offline&prompt=consent`); }

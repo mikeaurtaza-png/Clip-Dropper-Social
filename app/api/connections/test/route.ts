@@ -1,0 +1,2 @@
+import { NextResponse } from "next/server"; import { requireUser } from "@/lib/auth"; import { getConnection } from "@/lib/supabaseRest";
+export async function POST(req:Request){ await requireUser(); const providers=['dropbox','youtube','facebook']; const status:any={}; for(const p of providers) status[p]=!!(await getConnection(p)); status.openai=!!process.env.OPENAI_API_KEY; return NextResponse.json({ok:true,status}); }

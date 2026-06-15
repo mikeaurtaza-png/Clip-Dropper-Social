@@ -1,0 +1,2 @@
+import { requireUser } from "@/lib/auth"; import { listRows } from "@/lib/supabaseRest"; import type { Clip } from "@/lib/types";
+export default async function Calendar(){ await requireUser(); const clips=await listRows<Clip>('clips','status=eq.scheduled&order=scheduled_at.asc&limit=100'); return <main className="card" style={{padding:22}}><h1>Calendar</h1>{clips.length===0?<p>No scheduled clips.</p>:clips.map(c=><div key={c.id} style={{borderTop:'1px solid rgba(148,163,184,.18)',padding:12}}><b>{c.scheduled_at}</b> — {c.filename}</div>)}</main> }

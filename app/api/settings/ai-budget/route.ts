@@ -1,0 +1,2 @@
+import { NextResponse } from "next/server"; import { requireUser } from "@/lib/auth"; import { upsertSetting } from "@/lib/supabaseRest";
+export async function POST(req:Request){ await requireUser(); const f=await req.formData(); const monthly=Math.max(0,Number(f.get('monthly_dollars')||10)); await upsertSetting('ai_budget',{monthly_cents:Math.round(monthly*100),hard_stop:f.get('hard_stop')==='on'}); return NextResponse.redirect(new URL('/settings',req.url)); }

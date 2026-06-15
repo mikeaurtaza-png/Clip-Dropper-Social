@@ -1,0 +1,2 @@
+import { NextResponse } from "next/server"; import { appUrl, env } from "@/lib/env"; import { requireUser } from "@/lib/auth";
+export async function GET(){ await requireUser(); const key=env('DROPBOX_APP_KEY'); if(!key) return NextResponse.redirect(`${appUrl()}/settings?dropbox_missing=1`); const red=encodeURIComponent(`${appUrl()}/api/auth/dropbox/callback`); return NextResponse.redirect(`https://www.dropbox.com/oauth2/authorize?client_id=${key}&redirect_uri=${red}&response_type=code&token_access_type=offline`); }
